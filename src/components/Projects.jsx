@@ -23,6 +23,7 @@ const Projects = () => {
       case 'html': return <FaHtml5 className="text-[#E34F26]" title="HTML5" />;
       case 'css': return <FaCss3Alt className="text-[#1572B6]" title="CSS3" />;
       case 'javascript': return <SiJavascript className="text-[#F7DF1E]" title="JavaScript" />;
+      case 'ejs': return <FaCode className="text-[#A91E50]" title="EJS" />;
       case 'dom manipulation': return <FaCode className="text-yellow-400" title="DOM Manipulation" />;
       case 'local storage': return <FaDatabase className="text-blue-400" title="Local Storage" />;
       case 'date/time api': return <FaClock className="text-purple-400" title="Date/Time API" />;
@@ -39,9 +40,23 @@ const Projects = () => {
       tech: ['React', 'Node.js', 'Express', 'MongoDB'],
       color: 'from-blue-500 to-cyan-500',
       liveLink: 'https://blog-app-five-psi-40.vercel.app',
+      githubLink: 'https://github.com/amaan2t3/BlogApp',
       icon: (
         <svg className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v10a2 2 0 01-2 2zM14 4v5h5" />
+        </svg>
+      )
+    },
+    {
+      title: 'URL Shortener',
+      description: 'A full-stack URL Shortener web app with real-time click tracking. Built with Node.js, Express, MongoDB & EJS, deployed on Railway.',
+      tech: ['Node.js', 'Express', 'MongoDB', 'EJS'],
+      color: 'from-green-500 to-emerald-600',
+      liveLink: 'https://url-shortener-production-4595.up.railway.app',
+      githubLink: 'https://github.com/amaan2t3/URL-Shortener',
+      icon: (
+        <svg className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
         </svg>
       )
     },
@@ -51,6 +66,7 @@ const Projects = () => {
       tech: ['React', 'Tailwind CSS', 'API'],
       color: 'from-purple-500 to-pink-500',
       liveLink: 'https://gym-fitness-amaan.netlify.app',
+      githubLink: 'https://github.com/amaan2t3/GYM-Fitness-WebPageUI',
       icon: (
         <svg className="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -118,72 +134,101 @@ const Projects = () => {
           {projects.map((project, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -8 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="group relative bg-dark-800/40 rounded-3xl overflow-hidden border border-white/5 hover:border-primary-500/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl flex flex-col backdrop-blur-sm"
+              className="group relative rounded-[2rem] overflow-hidden p-[1px] flex flex-col z-10 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-shadow duration-500"
             >
-              <div 
-                className={`h-40 bg-gradient-to-br ${project.color} opacity-70 group-hover:opacity-100 transition-opacity flex items-center justify-center shrink-0 cursor-pointer relative overflow-hidden`} 
-                onClick={() => project.isBundle && setShowModal(true)}
-              >
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300"></div>
-                <span className="text-white group-hover:scale-110 transition-transform duration-500 relative z-10 drop-shadow-lg">
-                  {project.icon}
-                </span>
-                {project.isBundle && (
-                  <div className="absolute top-3 right-3 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-[10px] font-bold text-white uppercase tracking-wider">
-                    Bundle
-                  </div>
-                )}
-              </div>
-              <div className="p-6 flex flex-col flex-grow relative">
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-400 transition-colors tracking-tight">
-                  {project.title}
-                </h3>
-                <p className="text-slate-400 text-sm mb-6 flex-grow leading-relaxed">
-                  {project.description}
-                </p>
+              {/* Animated Gradient Border Layer */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-[2rem]`}></div>
+              
+              {/* Inner Card Card */}
+              <div className="relative h-full bg-dark-800/90 backdrop-blur-xl rounded-[calc(2rem-1px)] border border-white/5 group-hover:border-transparent transition-all md:p-8 p-6 duration-500 flex flex-col overflow-hidden">
                 
-                {/* Tech Logos Only */}
-                <div className="flex flex-wrap gap-4 mb-8">
-                  {project.tech.map((t) => (
-                    <div 
-                      key={t}
-                      className="text-2xl hover:scale-120 transition-transform cursor-help transition-all duration-300"
-                    >
-                      {getTechIcon(t)}
+                {/* Glowing Background blob inside card */}
+                <div className={`absolute -top-24 -right-24 w-64 h-64 bg-gradient-to-br ${project.color} rounded-full blur-[80px] opacity-10 group-hover:opacity-30 transition-opacity duration-700 pointer-events-none`}></div>
+
+                {/* Top Section */}
+                <div className="flex items-start justify-between relative z-10 mb-8">
+                  <div 
+                    className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${project.color} flex items-center justify-center text-white shadow-xl shadow-black/20 group-hover:scale-110 group-hover:-rotate-6 group-hover:shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 cursor-pointer`}
+                    onClick={() => project.isBundle && setShowModal(true)}
+                  >
+                    <span className="w-8 h-8 flex items-center justify-center drop-shadow-md">
+                      {project.icon}
+                    </span>
+                  </div>
+                  
+                  {project.isBundle && (
+                    <div className="bg-white/5 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 text-[10px] font-bold text-white uppercase tracking-wider relative overflow-hidden">
+                      <div className={`absolute inset-0 bg-gradient-to-r ${project.color} opacity-20`}></div>
+                      <span className="relative z-10 flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                        Bundle
+                      </span>
                     </div>
-                  ))}
+                  )}
                 </div>
 
-                <div className="flex items-center justify-between mt-auto">
-                  {project.isBundle ? (
-                    <button
-                      onClick={() => setShowModal(true)}
-                      className="group/btn text-sm font-bold text-primary-500 hover:text-primary-400 transition-colors flex items-center gap-2 focus:outline-none"
-                    >
-                      View Projects <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
-                    </button>
-                  ) : (
+                {/* Content Section */}
+                <div className="flex flex-col flex-grow relative z-10">
+                  <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-slate-300 transition-all tracking-tight cursor-default">
+                    {project.title}
+                  </h3>
+                  <p className="text-slate-400 text-sm mb-8 flex-grow leading-relaxed cursor-default">
+                    {project.description}
+                  </p>
+                  
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {project.tech.map((t) => (
+                      <div 
+                        key={t}
+                        className="flex items-center gap-2 px-3 py-1.5 bg-dark-900/50 rounded-xl border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all duration-300 cursor-help"
+                      >
+                         <span className="text-base">{getTechIcon(t)}</span>
+                         <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wide">{t}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Links */}
+                  <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
+                    {project.isBundle ? (
+                      <button
+                        onClick={() => setShowModal(true)}
+                        className="group/btn text-sm font-bold text-white hover:text-slate-300 transition-colors flex items-center gap-2 focus:outline-none"
+                      >
+                        View Projects 
+                        <span className="flex items-center justify-center w-6 h-6 rounded-full bg-white/5 group-hover/btn:bg-white/10 transition-colors">
+                          <span className="group-hover/btn:translate-x-0.5 transition-transform">→</span>
+                        </span>
+                      </button>
+                    ) : (
+                      <a
+                        href={project.liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group/btn text-sm font-bold text-white hover:text-slate-300 transition-colors flex items-center gap-2"
+                      >
+                        Live Demo 
+                        <span className="flex items-center justify-center w-6 h-6 rounded-full bg-white/5 group-hover/btn:bg-white/10 transition-colors">
+                          <span className="group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform block rotate-[-45deg]">→</span>
+                        </span>
+                      </a>
+                    )}
                     <a
-                      href={project.liveLink}
+                      href={project.githubLink || "https://github.com/amaan2t3"}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group/btn text-sm font-bold text-primary-500 hover:text-primary-400 transition-colors flex items-center gap-2"
+                      className="w-10 h-10 rounded-full bg-white/5 border border-white/5 flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/10 hover:border-white/20 transition-all group-hover:rotate-12 group-hover:scale-110"
+                      title="View GitHub Repository"
                     >
-                      Live Demo <span className="group-hover/btn:translate-x-1 transition-transform">→</span>
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
                     </a>
-                  )}
-                  <a
-                    href="https://github.com/amaan2t3"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs font-bold text-slate-500 hover:text-white transition-colors uppercase tracking-wider"
-                  >
-                    GitHub
-                  </a>
+                  </div>
                 </div>
               </div>
             </motion.div>
